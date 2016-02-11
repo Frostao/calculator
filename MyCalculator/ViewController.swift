@@ -8,11 +8,15 @@
 
 import UIKit
 
+
 class ViewController: UIViewController {
     @IBOutlet weak var resultLabel: UILabel!
     
     var number:NSNumber?
     var isDouble: Bool?
+    let formatter = NSNumberFormatter()
+    var numberStack = [NSNumber]()
+    var operationStack = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,31 +24,93 @@ class ViewController: UIViewController {
         let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeRight:")
         swipeRecognizer.direction = .Right
         resultLabel.addGestureRecognizer(swipeRecognizer)
+        
+        
         number = 0
         isDouble = false
+        formatter.numberStyle = .DecimalStyle
+        formatter.maximumFractionDigits = 8
         resultLabel.text = number?.description
         
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func calculate(operation: String) {
+        if !numberStack.isEmpty {
+            let op = operationStack.last
+            if !((op == "+" || op == "-") && (operation == "*" || operation == "/")) {
+                
+                switch operation {
+                case "plus":
+                    number = numberStack.removeLast().doubleValue + (number?.doubleValue)!
+                    break
+                case "minus":
+                    number = numberStack.removeLast().doubleValue - (number?.doubleValue)!
+                    break
+                case "divide":
+                    number = numberStack.removeLast().doubleValue / (number?.doubleValue)!
+                    break
+                case "multiply":
+                    number = numberStack.removeLast().doubleValue * (number?.doubleValue)!
+                    break
+                default:
+                    break
+                }
+            }
+        }
+        operationStack.append(operation)
+        numberStack.append(number!)
+        setResultLabel()
     }
     
+    func doEquals() {
+        if !numberStack.isEmpty {
+            let operation = operationStack.removeLast()
+            switch operation {
+            case "plus":
+                number = numberStack.removeLast().doubleValue + (number?.doubleValue)!
+                break
+            case "minus":
+                number = numberStack.removeLast().doubleValue - (number?.doubleValue)!
+                break
+            case "divide":
+                number = numberStack.removeLast().doubleValue / (number?.doubleValue)!
+                break
+            case "multiply":
+                number = numberStack.removeLast().doubleValue * (number?.doubleValue)!
+                break
+            default:
+                break
+            }
+            doEquals()
+        }
+        setResultLabel()
+    }
+    
+    
+    
     func setResultLabel() {
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .DecimalStyle
         resultLabel.text = formatter.stringFromNumber(number!)
-        
-        
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     func addDigit(digit: Int) {
         if isDouble! {
-            number = (number?.doubleValue)! * 10 + Double(digit)
+            
+            //number = (number?.doubleValue)! * 10 + Double(digit)
+            //let index = resultLabel.text?.startIndex.advancedBy((resultLabel.text?.characters.count)!-1)
+            resultLabel.text = resultLabel.text! + digit.description
+            if digit == 0{
+                return
+            } else {
+                number = formatter.numberFromString(resultLabel.text!)
+            }
+            
+            
+            
         } else {
             number = (number?.integerValue)! * 10 + digit
+            //resultLabel.text = resultLabel.text! + digit.description
         }
         
         setResultLabel()
@@ -52,6 +118,7 @@ class ViewController: UIViewController {
     
     func clearCalculator() {
         number = 0
+        isDouble = false
         setResultLabel()
     }
     
@@ -62,6 +129,10 @@ class ViewController: UIViewController {
     
     func removeLastDigit() {
         if isDouble! {
+            if resultLabel.text![resultLabel.text!.endIndex.advancedBy(-2)] == "." {
+                isDouble = false
+            }
+            number = formatter.numberFromString(resultLabel.text!.substringToIndex(resultLabel.text!.endIndex.advancedBy(-1)))
             
         } else {
             number = Int((number?.doubleValue)! * 0.1)
@@ -73,6 +144,19 @@ class ViewController: UIViewController {
         removeLastDigit()
     }
     
+    func addDot() {
+        if !isDouble! {
+            isDouble = true
+            resultLabel.text = resultLabel.text! + "."
+        }
+    }
+    
+    func addPercent() {
+        number = (number?.doubleValue)! * 0.01
+        setResultLabel()
+    }
+    
+    
     @IBAction func acButtonPressed(sender: AnyObject) {
         clearCalculator()
     }
@@ -80,21 +164,22 @@ class ViewController: UIViewController {
         switchSign()
     }
     @IBAction func percentButtonPressed(sender: AnyObject) {
+        addPercent()
     }
     @IBAction func divideButtonPressed(sender: AnyObject) {
-        
+        calculate("divide")
     }
     @IBAction func multiplyButtonPressed(sender: AnyObject) {
-        
+        calculate("multiply")
     }
     @IBAction func minusButtonPressed(sender: AnyObject) {
-        
+        calculate("minus")
     }
     @IBAction func plusButtonPressed(sender: AnyObject) {
-        
+        calculate("plus")
     }
     @IBAction func equalButtonPressed(sender: AnyObject) {
-        
+        calculate("nil")
     }
     @IBAction func number1Pressed(sender: AnyObject) {
         addDigit(1)
@@ -127,7 +212,7 @@ class ViewController: UIViewController {
         addDigit(0)
     }
     @IBAction func dotPressed(sender: AnyObject) {
-        
+        addDot()
     }
     
 }
