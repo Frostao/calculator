@@ -21,6 +21,7 @@ class ViewController: UIViewController {
         swipeRecognizer.direction = .Right
         resultLabel.addGestureRecognizer(swipeRecognizer)
         calulatorCore = CalculatorCore(label: resultLabel)
+        CalculatorCore.sharedInstance = calulatorCore
 
     }
     
@@ -51,10 +52,8 @@ class ViewController: UIViewController {
         calulatorCore?.calculate("plus")
     }
     @IBAction func equalButtonPressed(sender: AnyObject) {
-        if !calulatorCore!.calculated {
-            calulatorCore?.evaluate()
-        }
         
+        calulatorCore?.handleEqual()
     }
     @IBAction func number1Pressed(sender: AnyObject) {
         calulatorCore?.addDigit(1)

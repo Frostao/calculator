@@ -266,9 +266,17 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EqF-8u-frU">
+                                <rect key="frame" x="15" y="25" width="50" height="30"/>
+                                <state key="normal" title="History"/>
+                                <connections>
+                                    <segue destination="5zR-Tb-iw2" kind="presentation" id="gyp-PI-36v"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="EqF-8u-frU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="10" id="0bF-cY-oTh"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="XC3-wA-zxD" secondAttribute="bottom" id="6Wp-FF-a7G"/>
                             <constraint firstItem="pT8-xH-rbd" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.25" id="72v-YF-7M4"/>
                             <constraint firstItem="Hqn-cl-ycr" firstAttribute="leading" secondItem="XC3-wA-zxD" secondAttribute="leading" constant="15" id="Cqj-Yj-IWa"/>
@@ -276,11 +284,14 @@
                             <constraint firstItem="XC3-wA-zxD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="TRT-uw-izc"/>
                             <constraint firstItem="XC3-wA-zxD" firstAttribute="top" secondItem="Hqn-cl-ycr" secondAttribute="bottom" id="UaE-vr-fPM"/>
                             <constraint firstItem="Hqn-cl-ycr" firstAttribute="height" secondItem="MbB-ba-Q2K" secondAttribute="height" id="UcH-67-d3Y"/>
+                            <constraint firstItem="EqF-8u-frU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="f3T-K6-B4w"/>
                             <constraint firstAttribute="trailing" secondItem="Hqn-cl-ycr" secondAttribute="trailing" constant="15" id="kEy-O0-Knl"/>
                             <constraint firstItem="XC3-wA-zxD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="208" id="l7G-WJ-ROr"/>
+                            <constraint firstItem="EqF-8u-frU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-5" id="ytJ-kt-3Nz"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="0bF-cY-oTh"/>
                                 <exclude reference="Oe9-9H-xlA"/>
                                 <exclude reference="l7G-WJ-ROr"/>
                             </mask>
@@ -293,7 +304,69 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="149" y="349"/>
+            <point key="canvasLocation" x="117" y="363"/>
+        </scene>
+        <!--History-->
+        <scene sceneID="afU-b4-cRs">
+            <objects>
+                <tableViewController id="cDT-E1-puS" customClass="HistoryViewController" customModule="MyCalculator" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6IE-ot-98M">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="OPL-EU-Oqj" style="IBUITableViewCellStyleDefault" id="Ck1-Hl-Eh5">
+                                <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ck1-Hl-Eh5" id="hrY-dH-AtK">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OPL-EU-Oqj">
+                                            <rect key="frame" x="15" y="0.0" width="384" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="cDT-E1-puS" id="kmi-KP-fg6"/>
+                            <outlet property="delegate" destination="cDT-E1-puS" id="b3T-h5-hz3"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="History" id="Far-9j-hO8">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="QWm-p8-dHb">
+                            <connections>
+                                <action selector="backPressed:" destination="cDT-E1-puS" id="wtV-gz-V5x"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="agw-dJ-vmt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1285" y="363"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="TSr-cr-jpr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5zR-Tb-iw2" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FzX-gV-nZQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="cDT-E1-puS" kind="relationship" relationship="rootViewController" id="bzR-EQ-BKx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kJc-wG-iDc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="659" y="363"/>
         </scene>
     </scenes>
 </document>

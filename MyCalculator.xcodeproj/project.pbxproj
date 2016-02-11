@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8452E3F91C6D1B960035624F /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8452E3F81C6D1B960035624F /* HistoryViewController.swift */; };
 		84DA16171C69655B00A38429 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DA16161C69655B00A38429 /* AppDelegate.swift */; };
 		84DA16191C69655B00A38429 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DA16181C69655B00A38429 /* ViewController.swift */; };
 		84DA161C1C69655B00A38429 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84DA161A1C69655B00A38429 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8452E3F81C6D1B960035624F /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		84DA16131C69655B00A38429 /* MyCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84DA16161C69655B00A38429 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84DA16181C69655B00A38429 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				84DA16161C69655B00A38429 /* AppDelegate.swift */,
 				84DA16181C69655B00A38429 /* ViewController.swift */,
 				84DA16281C6C390400A38429 /* CalculatorCore.swift */,
+				8452E3F81C6D1B960035624F /* HistoryViewController.swift */,
 				84DA161A1C69655B00A38429 /* Main.storyboard */,
 				84DA161D1C69655B00A38429 /* Assets.xcassets */,
 				84DA161F1C69655B00A38429 /* LaunchScreen.storyboard */,
@@ -141,6 +144,7 @@
 				84DA16191C69655B00A38429 /* ViewController.swift in Sources */,
 				84DA16171C69655B00A38429 /* AppDelegate.swift in Sources */,
 				84DA16291C6C390400A38429 /* CalculatorCore.swift in Sources */,
+				8452E3F91C6D1B960035624F /* HistoryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

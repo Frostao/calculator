@@ -11,6 +11,20 @@ import UIKit
 class CalculatorCore: NSObject {
     //the core for the calculator
     
+    static var sharedInstance: CalculatorCore? = nil
+    
+    var number:NSNumber
+    var isDouble: Bool
+    var numberChanged: Bool
+    var calculated: Bool
+    let formatter = NSNumberFormatter()
+    var numberStack = [NSNumber]()
+    var operationStack = [String]()
+    var resultLabel: UILabel
+    var currentInput: String = ""
+    var history = [String]()
+    
+    
     init(label: UILabel) {
 
         number = 0
@@ -21,36 +35,34 @@ class CalculatorCore: NSObject {
         resultLabel.text = number.description
         numberChanged = false
         calculated = false
+        
     }
-    var number:NSNumber
-    var isDouble: Bool
-    var numberChanged: Bool
-    var calculated: Bool
-    let formatter = NSNumberFormatter()
-    var numberStack = [NSNumber]()
-    var operationStack = [String]()
-    var resultLabel: UILabel
-    
     
     
     func calculate(operation: String) {
+        //evaluate every time the user press an action
         if numberChanged {
             if !numberStack.isEmpty {
                 let op = operationStack.last
                 if !((op == "plus" || op == "minus") && (operation == "multiply" || operation == "divide")) {
+                    //handles order of operation
                     operationStack.removeLast()
                     switch op! {
                     case "plus":
                         number = numberStack.removeLast().doubleValue + number.doubleValue
+                        //currentInput = currentInput + "+"
                         break
                     case "minus":
                         number = numberStack.removeLast().doubleValue - number.doubleValue
+                        //currentInput = currentInput + "-"
                         break
                     case "divide":
                         number = numberStack.removeLast().doubleValue / number.doubleValue
+                        //currentInput = currentInput + "÷"
                         break
                     case "multiply":
                         number = numberStack.removeLast().doubleValue * number.doubleValue
+                        //currentInput = currentInput + "×"
                         break
                     default:
                         break
@@ -64,7 +76,33 @@ class CalculatorCore: NSObject {
             isDouble = false
             numberChanged = false
             calculated = false
+            switch operation {
+            case "plus":
+                currentInput = currentInput + "+"
+                break
+            case "minus":
+                currentInput = currentInput + "-"
+                break
+            case "divide":
+                currentInput = currentInput + "÷"
+                break
+            case "multiply":
+                currentInput = currentInput + "×"
+                break
+            default:
+                break
+            }
         }
+    }
+    
+    
+    func handleEqual() {
+        if !calculated {
+            evaluate()
+        }
+        currentInput = currentInput + "=" + number.description
+        history.append(currentInput)
+        currentInput = ""
     }
     
     func evaluate() {
@@ -100,14 +138,17 @@ class CalculatorCore: NSObject {
     
     
     func setResultLabel() {
+        //update the result
         resultLabel.text = formatter.stringFromNumber(number)
     }
     
     func getNumberOfDigits() -> Int {
+        
         return (formatter.stringFromNumber(number)?.characters.count)!
     }
     
     func addDigit(digit: Int) {
+        //add a digit in the number
         if getNumberOfDigits() < 12 {
             if isDouble {
                 
@@ -128,24 +169,29 @@ class CalculatorCore: NSObject {
             }
         }
         numberChanged = true
+        currentInput = currentInput + digit.description
         setResultLabel()
     }
     
     func clearCalculator() {
+        //reset the calculator
         number = 0
         isDouble = false
         calculated = false
         setResultLabel()
         numberStack.removeAll()
         operationStack.removeAll()
+        currentInput = ""
     }
     
     func switchSign() {
+        
         number = -number.doubleValue
         setResultLabel()
     }
     
     func removeLastDigit() {
+        //swipe action to remove the last digit
         if isDouble {
             if resultLabel.text![resultLabel.text!.endIndex.advancedBy(-2)] == "." {
                 isDouble = false
@@ -160,6 +206,7 @@ class CalculatorCore: NSObject {
     
     
     func addDot() {
+        //add a dot
         if !isDouble {
             isDouble = true
             resultLabel.text = resultLabel.text! + "."
@@ -167,7 +214,9 @@ class CalculatorCore: NSObject {
     }
     
     func addPercent() {
+        //percent operation
         number = number.doubleValue * 0.01
+        currentInput = currentInput + "%"
         setResultLabel()
     }
 
