@@ -12,6 +12,7 @@
 		84DA161C1C69655B00A38429 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84DA161A1C69655B00A38429 /* Main.storyboard */; };
 		84DA161E1C69655B00A38429 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84DA161D1C69655B00A38429 /* Assets.xcassets */; };
 		84DA16211C69655B00A38429 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84DA161F1C69655B00A38429 /* LaunchScreen.storyboard */; };
+		84DA16291C6C390400A38429 /* CalculatorCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DA16281C6C390400A38429 /* CalculatorCore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		84DA161D1C69655B00A38429 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84DA16201C69655B00A38429 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84DA16221C69655B00A38429 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84DA16281C6C390400A38429 /* CalculatorCore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorCore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				84DA16161C69655B00A38429 /* AppDelegate.swift */,
 				84DA16181C69655B00A38429 /* ViewController.swift */,
+				84DA16281C6C390400A38429 /* CalculatorCore.swift */,
 				84DA161A1C69655B00A38429 /* Main.storyboard */,
 				84DA161D1C69655B00A38429 /* Assets.xcassets */,
 				84DA161F1C69655B00A38429 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			files = (
 				84DA16191C69655B00A38429 /* ViewController.swift in Sources */,
 				84DA16171C69655B00A38429 /* AppDelegate.swift in Sources */,
+				84DA16291C6C390400A38429 /* CalculatorCore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +292,7 @@
 				84DA16271C69655B00A38429 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

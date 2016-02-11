@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     let formatter = NSNumberFormatter()
     var numberStack = [NSNumber]()
     var operationStack = [String]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,16 +31,14 @@ class ViewController: UIViewController {
         formatter.numberStyle = .DecimalStyle
         formatter.maximumFractionDigits = 8
         resultLabel.text = number?.description
-        
-        // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     func calculate(operation: String) {
         if !numberStack.isEmpty {
             let op = operationStack.last
-            if !((op == "+" || op == "-") && (operation == "*" || operation == "/")) {
-                
-                switch operation {
+            if !((op == "plus" || op == "minus") && (operation == "multiply" || operation == "divide")) {
+                operationStack.removeLast()
+                switch op! {
                 case "plus":
                     number = numberStack.removeLast().doubleValue + (number?.doubleValue)!
                     break
@@ -56,14 +54,17 @@ class ViewController: UIViewController {
                 default:
                     break
                 }
+                evaluate()
             }
         }
         operationStack.append(operation)
         numberStack.append(number!)
-        setResultLabel()
+        number = 0
+        isDouble = false
     }
     
-    func doEquals() {
+    func evaluate() {
+        //evaluate everything in the stack
         if !numberStack.isEmpty {
             let operation = operationStack.removeLast()
             switch operation {
@@ -82,7 +83,9 @@ class ViewController: UIViewController {
             default:
                 break
             }
-            doEquals()
+            if !operationStack.isEmpty {
+                evaluate()
+            }
         }
         setResultLabel()
     }
@@ -91,28 +94,32 @@ class ViewController: UIViewController {
     
     func setResultLabel() {
         resultLabel.text = formatter.stringFromNumber(number!)
-        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    func getNumberOfDigits() -> Int {
+        return (formatter.stringFromNumber(number!)?.characters.count)!
     }
     
     func addDigit(digit: Int) {
-        if isDouble! {
-            
-            //number = (number?.doubleValue)! * 10 + Double(digit)
-            //let index = resultLabel.text?.startIndex.advancedBy((resultLabel.text?.characters.count)!-1)
-            resultLabel.text = resultLabel.text! + digit.description
-            if digit == 0{
-                return
+        if getNumberOfDigits() < 12 {
+            if isDouble! {
+                
+                //number = (number?.doubleValue)! * 10 + Double(digit)
+                //let index = resultLabel.text?.startIndex.advancedBy((resultLabel.text?.characters.count)!-1)
+                resultLabel.text = resultLabel.text! + digit.description
+                if digit == 0{
+                    return
+                } else {
+                    number = formatter.numberFromString(resultLabel.text!)
+                }
+                
+                
+                
             } else {
-                number = formatter.numberFromString(resultLabel.text!)
+                number = (number?.integerValue)! * 10 + digit
+                //resultLabel.text = resultLabel.text! + digit.description
             }
-            
-            
-            
-        } else {
-            number = (number?.integerValue)! * 10 + digit
-            //resultLabel.text = resultLabel.text! + digit.description
         }
-        
         setResultLabel()
     }
     
@@ -120,6 +127,8 @@ class ViewController: UIViewController {
         number = 0
         isDouble = false
         setResultLabel()
+        numberStack.removeAll()
+        operationStack.removeAll()
     }
     
     func switchSign() {
@@ -179,7 +188,7 @@ class ViewController: UIViewController {
         calculate("plus")
     }
     @IBAction func equalButtonPressed(sender: AnyObject) {
-        calculate("nil")
+        evaluate()
     }
     @IBAction func number1Pressed(sender: AnyObject) {
         addDigit(1)
